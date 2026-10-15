@@ -1,1 +1,645 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio · Roblox Developer</title>
+<meta name="description" content="Portfolio twórcy Roblox: modele, skrypty i eventy wewnątrz gier.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --ink:#111110; --muted:#6c6b66; --line:#e2dfd6;
+  --accent:#111110; --accent-ink:#f6f4ef; --danger:#b3261e;
+  --radius:14px; --serif:"Instrument Serif",Georgia,serif; --sans:"Inter",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f0f0e;--surface:#171716;--ink:#f1efe9;--muted:#9a988f;--line:#2a2927;--accent:#f1efe9;--accent-ink:#0f0f0e;--danger:#ff8a80}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{width:min(1180px,100% - 48px);margin-inline:auto}
 
+/* NAV */
+nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 80%,transparent);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{font-family:var(--serif);font-size:24px;text-decoration:none;letter-spacing:-.01em}
+.nav-links{display:flex;align-items:center;gap:26px;font-size:14px}
+.nav-links a{text-decoration:none;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:999px;border:1px solid var(--ink);background:var(--accent);color:var(--accent-ink);cursor:pointer;font-size:14px;font-weight:500;text-decoration:none;transition:transform .15s,opacity .2s}
+.btn:hover{transform:translateY(-1px);opacity:.9}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.small{padding:6px 12px;font-size:13px}
+.btn.danger{background:transparent;color:var(--danger);border-color:var(--danger)}
+.user-chip{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--line);object-fit:cover;display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--ink);overflow:hidden}
+@media(max-width:720px){.nav-links a.hide-m{display:none}}
+
+/* HERO */
+.hero{padding:110px 0 70px}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(48px,9vw,128px);line-height:.98;letter-spacing:-.025em;max-width:14ch}
+h1 em{font-style:italic;color:var(--muted)}
+.hero p.lead{margin-top:32px;max-width:52ch;color:var(--muted);font-size:18px}
+.hero-actions{margin-top:36px;display:flex;gap:12px;flex-wrap:wrap}
+.stats{display:flex;gap:48px;margin-top:70px;padding-top:28px;border-top:1px solid var(--line);flex-wrap:wrap}
+.stat b{display:block;font-family:var(--serif);font-weight:400;font-size:40px;line-height:1}
+.stat span{font-size:13px;color:var(--muted)}
+
+/* WORK */
+section{padding:70px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:34px}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,56px);letter-spacing:-.02em;line-height:1.05}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:7px 15px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:13px;color:var(--muted);transition:.2s}
+.chip:hover{color:var(--ink);border-color:var(--ink)}
+.chip.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px}
+.card{cursor:pointer;opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.card.in{opacity:1;transform:none}
+.card .thumb{aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;background:var(--line);position:relative}
+.card .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.card:hover .thumb img{transform:scale(1.05)}
+.card .badge{position:absolute;left:12px;top:12px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);padding:4px 11px;border-radius:999px;font-size:12px;font-weight:500}
+.card .meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:14px}
+.card h3{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.15}
+.card .counts{font-size:13px;color:var(--muted);white-space:nowrap}
+.card p{color:var(--muted);font-size:14px;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.empty{padding:60px 0;text-align:center;color:var(--muted);grid-column:1/-1}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr 1.2fr;gap:60px}
+@media(max-width:820px){.about{grid-template-columns:1fr;gap:28px}}
+.about p{color:var(--muted);font-size:18px;margin-bottom:18px;max-width:60ch}
+.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.skills span{border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:13px}
+
+/* CONTACT / FOOTER */
+.contact{text-align:center;padding:110px 0}
+.contact h2{font-size:clamp(42px,8vw,96px);max-width:14ch;margin:0 auto 30px}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(10,10,9,.55);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 16px}
+.overlay.open{display:flex;animation:fade .25s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--bg);border:1px solid var(--line);border-radius:20px;width:min(980px,100%);position:relative;animation:rise .35s cubic-bezier(.2,.7,.2,1);margin:auto}
+.modal.narrow{width:min(440px,100%);padding:36px}
+@keyframes rise{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.close{position:absolute;right:14px;top:14px;z-index:2;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:18px;line-height:1}
+.close:hover{border-color:var(--ink)}
+.detail-img{width:100%;max-height:520px;object-fit:cover;border-radius:20px 20px 0 0;display:block;background:var(--line)}
+.detail-body{padding:32px 36px 38px}
+.detail-body h3{font-family:var(--serif);font-weight:400;font-size:42px;line-height:1.05;margin:6px 0 14px}
+.detail-body .desc{color:var(--muted);white-space:pre-wrap;max-width:68ch}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0}
+.tags span{font-size:12px;border:1px solid var(--line);padding:2px 10px;border-radius:999px;color:var(--muted)}
+.actions{display:flex;gap:10px;margin:22px 0 8px;flex-wrap:wrap}
+.like.on{background:var(--ink);color:var(--bg)}
+.comments{margin-top:34px;border-top:1px solid var(--line);padding-top:24px}
+.comments h4{font-family:var(--serif);font-weight:400;font-size:26px;margin-bottom:16px}
+.comment{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.comment .who{font-size:13px;font-weight:600}
+.comment .when{font-size:12px;color:var(--muted);margin-left:8px;font-weight:400}
+.comment .txt{font-size:15px;color:var(--ink);white-space:pre-wrap;word-break:break-word}
+.comment .del{margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;align-self:flex-start}
+.comment .del:hover{color:var(--danger)}
+.cform{display:flex;gap:10px;margin-top:16px}
+.cform textarea{flex:1;resize:vertical;min-height:46px}
+
+/* FORMS */
+label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px}
+input[type=text],input[type=email],input[type=password],input[type=url],textarea,select{width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);outline:none;transition:border-color .2s}
+input:focus,textarea:focus,select:focus{border-color:var(--ink)}
+.modal h3.title{font-family:var(--serif);font-weight:400;font-size:34px;margin-bottom:6px}
+.sub{color:var(--muted);font-size:14px;margin-bottom:10px}
+.err{color:var(--danger);font-size:13px;min-height:20px;margin-top:10px}
+.sep{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;margin:18px 0}
+.sep::before,.sep::after{content:"";flex:1;height:1px;background:var(--line)}
+.full{width:100%}
+.switch{background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:13px;margin-top:14px}
+
+/* ADMIN */
+.admin{padding:34px}
+.drop{border:1.5px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--muted);cursor:pointer;font-size:14px;transition:.2s}
+.drop:hover,.drop.over{border-color:var(--ink);color:var(--ink)}
+.drop img{max-height:160px;border-radius:8px;margin-top:10px}
+.admin-list{margin-top:30px;border-top:1px solid var(--line)}
+.admin-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.admin-row img{width:56px;height:42px;object-fit:cover;border-radius:6px;background:var(--line)}
+.admin-row .t{flex:1;font-size:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.row2{grid-template-columns:1fr}.detail-body{padding:24px 20px 28px}.admin{padding:22px}}
+
+/* TOAST */
+#toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:100}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.demo-banner{background:var(--ink);color:var(--bg);text-align:center;font-size:13px;padding:8px 12px}
+.demo-banner code{background:rgba(127,127,127,.3);padding:1px 6px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<div id="demoBanner" class="demo-banner" hidden>Tryb demo: wklej swoją konfigurację Firebase w <code>index.html</code> (sekcja <code>firebaseConfig</code>), aby włączyć logowanie i bazę danych.</div>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="logo" id="siteName">Twoje Imię</a>
+    <div class="nav-links">
+      <a href="#work" class="hide-m">Prace</a>
+      <a href="#about" class="hide-m">O mnie</a>
+      <a href="#contact" class="hide-m">Kontakt</a>
+      <button class="btn ghost small" id="adminBtn" hidden>Panel admina</button>
+      <div class="user-chip" id="userChip" hidden>
+        <span class="avatar" id="userAvatar"></span>
+        <span id="userName"></span>
+        <button class="btn ghost small" id="logoutBtn">Wyloguj</button>
+      </div>
+      <button class="btn small" id="loginBtn">Zaloguj się</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Roblox Developer · Builder · Scripter</p>
+    <h1>Tworzę światy, <em>w które chce się grać.</em></h1>
+    <p class="lead">Modele 3D, skrypty w Luau i eventy na żywo wewnątrz gier. Poniżej wybór moich projektów.</p>
+    <div class="hero-actions">
+      <a class="btn" href="#work">Zobacz prace</a>
+      <a class="btn ghost" href="#contact">Napisz do mnie</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="statProjects">0</b><span>projektów</span></div>
+      <div class="stat"><b id="statLikes">0</b><span>polubień</span></div>
+      <div class="stat"><b>5+</b><span>lat w Roblox Studio</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Wybrane prace</h2>
+      <div class="filters" id="filters"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about">
+    <h2>O mnie</h2>
+    <div>
+      <p>Jestem twórcą w Roblox Studio. Buduję modele i mapy, piszę skrypty w Luau oraz przygotowuję eventy, które odpalają się w środku gier: od krótkich wydarzeń sezonowych po duże premiery.</p>
+      <p>Lubię czysty kod, dopracowane detale i rzeczy, które po prostu działają. Edytuj ten tekst w <code>index.html</code>, żeby opowiedzieć o sobie.</p>
+      <div class="skills">
+        <span>Luau</span><span>Modelowanie</span><span>Blender</span><span>UI / UX</span><span>Eventy live</span><span>DataStore</span><span>Optymalizacja</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Masz projekt? <em style="color:var(--muted)">Pogadajmy.</em></h2>
+    <a class="btn" id="mailLink" href="mailto:you@example.com">you@example.com</a>
+    <a class="btn ghost" id="discordLink" href="#" style="margin-left:8px">Discord</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><span>© <span id="year"></span> <span id="footName">Twoje Imię</span></span><span>Zbudowane z Firebase</span></div>
+</footer>
+
+<!-- PROJECT MODAL -->
+<div class="overlay" id="projectOverlay"><div class="modal" id="projectModal"></div></div>
+
+<!-- AUTH MODAL -->
+<div class="overlay" id="authOverlay">
+  <div class="modal narrow">
+    <button class="close" data-close>×</button>
+    <h3 class="title" id="authTitle">Zaloguj się</h3>
+    <p class="sub">Aby komentować i polubić prace.</p>
+    <button class="btn ghost full" id="googleBtn">Kontynuuj przez Google</button>
+    <div class="sep">lub e-mail</div>
+    <form id="authForm">
+      <div id="nameRow" hidden><label>Nazwa wyświetlana</label><input type="text" id="authName" maxlength="30"></div>
+      <label>E-mail</label><input type="email" id="authEmail" required autocomplete="email">
+      <label>Hasło</label><input type="password" id="authPass" required minlength="6" autocomplete="current-password">
+      <div class="err" id="authErr"></div>
+      <button class="btn full" type="submit" id="authSubmit">Zaloguj</button>
+    </form>
+    <button class="switch" id="authSwitch">Nie masz konta? Zarejestruj się</button>
+  </div>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="overlay" id="adminOverlay">
+  <div class="modal admin">
+    <button class="close" data-close>×</button>
+    <h3 class="title">Panel admina</h3>
+    <p class="sub">Dodaj nowy projekt do portfolio.</p>
+    <form id="projForm">
+      <label>Tytuł</label><input type="text" id="pTitle" required maxlength="80">
+      <div class="row2">
+        <div><label>Kategoria</label>
+          <select id="pCat"><option>Modele</option><option>Skrypty</option><option>Eventy</option><option>Inne</option></select></div>
+        <div><label>Link (np. do gry / modelu)</label><input type="url" id="pLink" placeholder="https://www.roblox.com/..."></div>
+      </div>
+      <label>Opis</label><textarea id="pDesc" rows="4" maxlength="1500"></textarea>
+      <label>Tagi (po przecinku)</label><input type="text" id="pTags" placeholder="Luau, Obby, Event">
+      <label>Zdjęcie</label>
+      <div class="drop" id="drop">Kliknij lub przeciągnij zdjęcie tutaj<br><img id="pPreview" hidden alt=""></div>
+      <input type="file" id="pFile" accept="image/*" hidden>
+      <div class="err" id="projErr"></div>
+      <button class="btn full" type="submit" id="projSubmit">Opublikuj projekt</button>
+    </form>
+    <div class="admin-list" id="adminList"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+/* ============================================================
+   1) KONFIGURACJA: wklej tu dane ze swojego projektu Firebase
+      (Firebase Console → Ustawienia projektu → Twoje aplikacje → Web)
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT-default-rtdb.europe-west1.firebasedatabase.app", // adres z Realtime Database w konsoli
+  projectId: "YOUR_PROJECT",
+  messagingSenderId: "000000000000",
+  appId: "YOUR_APP_ID"
+};
+
+/* Dane osobiste strony */
+const SITE = {
+  name: "Twoje Imię",
+  email: "you@example.com",
+  discord: "https://discord.gg/twojlink",
+  // konta, które mają dostęp do panelu admina (muszą też być wpisane w plikach reguł!)
+  adminEmails: ["you@example.com"]
+};
+
+/* ============================================================ */
+const DEMO = firebaseConfig.apiKey.startsWith("YOUR");
+const CATEGORIES = ["Wszystko", "Modele", "Skrypty", "Eventy", "Inne"];
+
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const toast = (msg) => { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 2600); };
+
+/* ---- Stan ---- */
+let user = null;
+let projects = [];
+let likes = {};            // projectId -> Set(uid)
+let filter = "Wszystko";
+let openId = null;
+let unsubComments = null;
+let fb = {};               // moduły Firebase (po inicjalizacji)
+
+const isAdmin = () => !DEMO && user && user.email && SITE.adminEmails.map(e => e.toLowerCase()).includes(user.email.toLowerCase());
+
+/* ---- Teksty strony ---- */
+$("#siteName").textContent = SITE.name;
+$("#footName").textContent = SITE.name;
+$("#year").textContent = new Date().getFullYear();
+$("#mailLink").href = "mailto:" + SITE.email; $("#mailLink").textContent = SITE.email;
+$("#discordLink").href = SITE.discord; $("#discordLink").target = "_blank"; $("#discordLink").rel = "noopener";
+if (DEMO) $("#demoBanner").hidden = false;
+
+/* ---- Dane demo (gdy brak Firebase) ---- */
+function placeholderImg(i, label) {
+  const tones = [["#d9d4c7", "#bdb6a4"], ["#cfd6d2", "#a9b5ae"], ["#d8cfd0", "#b9a9ac"], ["#d2d4dc", "#aeb2c3"], ["#dcd6c2", "#c2b88f"], ["#cdd8d9", "#9fb6b8"]];
+  const [a, b] = tones[i % tones.length];
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="800" height="600" fill="url(#g)"/><g fill="none" stroke="#111" stroke-opacity=".5" stroke-width="2"><rect x="300" y="200" width="200" height="200" rx="6"/><path d="M300 200l60-50h200l-60 50M500 200l60-50v200l-60 50"/></g><text x="400" y="470" text-anchor="middle" font-family="Georgia,serif" font-size="30" fill="#111" fill-opacity=".6">${label}</text></svg>`;
+  return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+}
+function demoData() {
+  const d = [
+    ["Neon City", "Modele", "Pełna mapa miejska w stylu cyberpunk: ponad 300 modeli, własne oświetlenie i optymalizacja pod mobile.", ["Mapa", "Modelowanie"]],
+    ["Inventory System", "Skrypty", "Modułowy system ekwipunku w Luau z zapisem w DataStore, drag & drop i walidacją po stronie serwera.", ["Luau", "DataStore", "UI"]],
+    ["Winter Event 2025", "Eventy", "Sezonowy event na żywo: znikające platformy, boss i ranking graczy w czasie rzeczywistym.", ["Event", "Live"]],
+    ["Low-poly Pack", "Modele", "Paczka 60 assetów low-poly do szybkiego prototypowania map.", ["Asset", "Low-poly"]],
+    ["Anti-Exploit Core", "Skrypty", "Lekka warstwa zabezpieczeń: kontrola prędkości, teleportów i zdalnych zdarzeń.", ["Luau", "Security"]],
+    ["Launch Night", "Eventy", "Premierowy event gry z odliczaniem, pokazem świetlnym i nagrodami dla pierwszych graczy.", ["Event", "Premiera"]],
+  ];
+  projects = d.map((x, i) => ({ id: "demo" + i, title: x[0], category: x[1], description: x[2], tags: x[3], link: "", imageUrl: placeholderImg(i, x[0]), createdAt: { toMillis: () => Date.now() - i * 1e8 } }));
+  likes = { demo0: new Set(["a", "b", "c"]), demo2: new Set(["a"]) };
+}
+
+/* ---- Render: filtry i siatka ---- */
+function renderFilters() {
+  $("#filters").innerHTML = CATEGORIES.map(c => `<button class="chip ${c === filter ? "active" : ""}" data-f="${c}">${c}</button>`).join("");
+}
+$("#filters").addEventListener("click", e => {
+  const b = e.target.closest("[data-f]"); if (!b) return;
+  filter = b.dataset.f; renderFilters(); renderGrid();
+});
+
+const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), { threshold: .08 });
+
+function renderGrid() {
+  const list = projects.filter(p => filter === "Wszystko" || p.category === filter);
+  const g = $("#grid");
+  if (!list.length) { g.innerHTML = `<div class="empty">Brak projektów w tej kategorii.</div>`; }
+  else g.innerHTML = list.map(p => `
+    <article class="card" data-id="${esc(p.id)}">
+      <div class="thumb"><img loading="lazy" src="${esc(p.thumbUrl || p.imageUrl)}" alt="${esc(p.title)}"><span class="badge">${esc(p.category)}</span></div>
+      <div class="meta"><h3>${esc(p.title)}</h3><span class="counts">♥ ${(likes[p.id]?.size) || 0}</span></div>
+      <p>${esc(p.description)}</p>
+    </article>`).join("");
+  g.querySelectorAll(".card").forEach(c => io.observe(c));
+  $("#statProjects").textContent = projects.length;
+  $("#statLikes").textContent = Object.values(likes).reduce((n, s) => n + s.size, 0);
+  if (isAdmin()) renderAdminList();
+}
+$("#grid").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) openProject(c.dataset.id); });
+
+/* ---- Modale ---- */
+const openOverlay = id => { $(id).classList.add("open"); document.body.style.overflow = "hidden"; };
+const closeOverlays = () => {
+  document.querySelectorAll(".overlay.open").forEach(o => o.classList.remove("open"));
+  document.body.style.overflow = ""; openId = null;
+  if (unsubComments) { unsubComments(); unsubComments = null; }
+};
+document.querySelectorAll(".overlay").forEach(o => o.addEventListener("mousedown", e => { if (e.target === o) closeOverlays(); }));
+document.addEventListener("click", e => { if (e.target.closest("[data-close]")) closeOverlays(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeOverlays(); });
+
+/* ---- Szczegóły projektu + polubienia + komentarze ---- */
+function openProject(id) {
+  const p = projects.find(x => x.id === id); if (!p) return;
+  openId = id;
+  const liked = user && likes[id]?.has(user.uid);
+  $("#projectModal").innerHTML = `
+    <button class="close" data-close>×</button>
+    <img class="detail-img" id="detailImg" src="${esc(p.thumbUrl || p.imageUrl)}" alt="${esc(p.title)}">
+    <div class="detail-body">
+      <div class="eyebrow" style="margin:0">${esc(p.category)}</div>
+      <h3>${esc(p.title)}</h3>
+      <p class="desc">${esc(p.description)}</p>
+      <div class="tags">${(p.tags || []).map(t => `<span>${esc(t)}</span>`).join("")}</div>
+      <div class="actions">
+        <button class="btn ghost like ${liked ? "on" : ""}" id="likeBtn">♥ <span id="likeCount">${likes[id]?.size || 0}</span></button>
+        ${p.link ? `<a class="btn" href="${esc(p.link)}" target="_blank" rel="noopener">Otwórz w Roblox ↗</a>` : ""}
+      </div>
+      <div class="comments">
+        <h4>Komentarze</h4>
+        <div id="commentList"><p class="sub">Ładowanie…</p></div>
+        <form class="cform" id="commentForm">
+          <textarea id="commentText" maxlength="500" placeholder="${user ? "Napisz komentarz…" : "Zaloguj się, aby komentować"}" ${user ? "" : "disabled"}></textarea>
+          <button class="btn" type="submit">Wyślij</button>
+        </form>
+      </div>
+    </div>`;
+  openOverlay("#projectOverlay");
+  loadFullImage(id);
+  $("#likeBtn").onclick = () => toggleLike(id);
+  $("#commentForm").onsubmit = ev => { ev.preventDefault(); sendComment(id); };
+  listenComments(id);
+}
+
+// pełne zdjęcie leży w /images/{id}; pobieramy je dopiero po otwarciu projektu
+const fullImgs = {};
+async function loadFullImage(id) {
+  if (DEMO) return;
+  try {
+    if (!(id in fullImgs)) { const s = await fb.get(fb.ref(fb.db, `images/${id}`)); fullImgs[id] = s.val(); }
+    const el = $("#detailImg");
+    if (fullImgs[id] && openId === id && el) el.src = fullImgs[id];
+  } catch (e) { console.error(e); }
+}
+
+function timeAgo(ts) {
+  const ms = typeof ts === "number" ? ts : ts?.toMillis ? ts.toMillis() : Date.now();
+  const s = Math.max(1, Math.round((Date.now() - ms) / 1000));
+  if (s < 60) return "przed chwilą"; if (s < 3600) return Math.floor(s / 60) + " min temu";
+  if (s < 86400) return Math.floor(s / 3600) + " godz. temu"; return Math.floor(s / 86400) + " dni temu";
+}
+
+let demoComments = {};
+function renderComments(id, list) {
+  const el = $("#commentList"); if (!el || openId !== id) return;
+  el.innerHTML = list.length ? list.map(c => `
+    <div class="comment">
+      <span class="avatar">${esc((c.name || "?")[0].toUpperCase())}</span>
+      <div><div class="who">${esc(c.name || "Anonim")}<span class="when">${timeAgo(c.createdAt)}</span></div><div class="txt">${esc(c.text)}</div></div>
+      ${(user && (c.uid === user.uid || isAdmin())) ? `<button class="del" data-del="${esc(c.id)}">usuń</button>` : ""}
+    </div>`).join("") : `<p class="sub">Bądź pierwszy, który skomentuje.</p>`;
+  el.querySelectorAll("[data-del]").forEach(b => b.onclick = () => deleteComment(id, b.dataset.del));
+}
+function listenComments(id) {
+  if (DEMO) { renderComments(id, demoComments[id] || []); return; }
+  if (unsubComments) unsubComments();
+  unsubComments = fb.onValue(fb.ref(fb.db, `comments/${id}`), snap => {
+    const v = snap.val() || {};
+    renderComments(id, Object.entries(v).map(([cid, c]) => ({ id: cid, ...c })).sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0)));
+  });
+}
+async function sendComment(id) {
+  if (!user) return needLogin();
+  const text = $("#commentText").value.trim(); if (!text) return;
+  if (DEMO) { (demoComments[id] ||= []).push({ id: String(Date.now()), name: "Ty", text, uid: "demo", createdAt: { toMillis: () => Date.now() } }); $("#commentText").value = ""; return renderComments(id, demoComments[id]); }
+  try {
+    await fb.push(fb.ref(fb.db, `comments/${id}`), { uid: user.uid, name: user.displayName || user.email.split("@")[0], text, createdAt: fb.serverTimestamp() });
+    $("#commentText").value = "";
+  } catch (e) { toast("Nie udało się dodać komentarza"); console.error(e); }
+}
+async function deleteComment(pid, cid) {
+  if (DEMO) { demoComments[pid] = (demoComments[pid] || []).filter(c => c.id !== cid); return renderComments(pid, demoComments[pid]); }
+  try { await fb.remove(fb.ref(fb.db, `comments/${pid}/${cid}`)); } catch (e) { toast("Brak uprawnień"); }
+}
+
+async function toggleLike(id) {
+  if (!user) return needLogin();
+  const set = (likes[id] ||= new Set());
+  const had = set.has(user.uid);
+  if (DEMO) { had ? set.delete(user.uid) : set.add(user.uid); }
+  else {
+    try {
+      const ref = fb.ref(fb.db, `likes/${id}/${user.uid}`);
+      had ? await fb.remove(ref) : await fb.set(ref, true);
+    } catch (e) { toast("Nie udało się zapisać polubienia"); return; }
+  }
+  refreshLikeUI(id);
+}
+function refreshLikeUI(id) {
+  if (openId === id) {
+    const on = user && likes[id]?.has(user.uid);
+    $("#likeBtn")?.classList.toggle("on", !!on);
+    const c = $("#likeCount"); if (c) c.textContent = likes[id]?.size || 0;
+  }
+  renderGrid();
+}
+function needLogin() { toast("Zaloguj się, aby to zrobić"); openAuth(); }
+
+/* ---- Logowanie ---- */
+let signup = false;
+function openAuth() {
+  if (DEMO) return toast("Tryb demo: najpierw skonfiguruj Firebase");
+  closeOverlays(); setAuthMode(false); openOverlay("#authOverlay");
+}
+function setAuthMode(s) {
+  signup = s;
+  $("#authTitle").textContent = s ? "Załóż konto" : "Zaloguj się";
+  $("#authSubmit").textContent = s ? "Zarejestruj" : "Zaloguj";
+  $("#authSwitch").textContent = s ? "Masz już konto? Zaloguj się" : "Nie masz konta? Zarejestruj się";
+  $("#nameRow").hidden = !s; $("#authErr").textContent = "";
+  $("#authPass").autocomplete = s ? "new-password" : "current-password";
+}
+const authMsg = c => ({
+  "auth/invalid-credential": "Nieprawidłowy e-mail lub hasło.", "auth/wrong-password": "Nieprawidłowe hasło.",
+  "auth/user-not-found": "Nie znaleziono konta.", "auth/email-already-in-use": "Ten e-mail jest już zajęty.",
+  "auth/weak-password": "Hasło musi mieć min. 6 znaków.", "auth/invalid-email": "Niepoprawny adres e-mail.",
+  "auth/popup-closed-by-user": "Okno logowania zostało zamknięte.", "auth/too-many-requests": "Zbyt wiele prób, spróbuj później."
+}[c] || "Coś poszło nie tak. Spróbuj ponownie.");
+
+$("#loginBtn").onclick = openAuth;
+$("#authSwitch").onclick = () => setAuthMode(!signup);
+$("#logoutBtn").onclick = async () => { await fb.signOut(fb.auth); toast("Wylogowano"); };
+$("#googleBtn").onclick = async () => {
+  try { await fb.signInWithPopup(fb.auth, new fb.GoogleAuthProvider()); closeOverlays(); toast("Zalogowano"); }
+  catch (e) { $("#authErr").textContent = authMsg(e.code); }
+};
+$("#authForm").onsubmit = async ev => {
+  ev.preventDefault(); $("#authErr").textContent = "";
+  const email = $("#authEmail").value.trim(), pass = $("#authPass").value;
+  try {
+    if (signup) {
+      const cred = await fb.createUserWithEmailAndPassword(fb.auth, email, pass);
+      const name = $("#authName").value.trim() || email.split("@")[0];
+      await fb.updateProfile(cred.user, { displayName: name });
+      user = { ...cred.user, displayName: name }; updateAuthUI();
+    } else await fb.signInWithEmailAndPassword(fb.auth, email, pass);
+    closeOverlays(); toast("Witaj!");
+  } catch (e) { $("#authErr").textContent = authMsg(e.code); }
+};
+
+function updateAuthUI() {
+  $("#loginBtn").hidden = !!user;
+  $("#userChip").hidden = !user;
+  $("#adminBtn").hidden = !isAdmin();
+  if (user) {
+    const n = user.displayName || user.email || "Użytkownik";
+    $("#userName").textContent = n;
+    $("#userAvatar").innerHTML = user.photoURL ? `<img src="${esc(user.photoURL)}" alt="" style="width:100%;height:100%;object-fit:cover" referrerpolicy="no-referrer">` : esc(n[0].toUpperCase());
+  }
+}
+
+/* ---- Panel admina ---- */
+let pickedFile = null;
+$("#adminBtn").onclick = () => { closeOverlays(); renderAdminList(); openOverlay("#adminOverlay"); };
+const drop = $("#drop"), fileInput = $("#pFile");
+drop.onclick = () => fileInput.click();
+["dragover", "dragenter"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", e => setFile(e.dataTransfer.files[0]));
+fileInput.onchange = () => setFile(fileInput.files[0]);
+function setFile(f) {
+  if (!f || !f.type.startsWith("image/")) return;
+  pickedFile = f;
+  const pv = $("#pPreview"); pv.src = URL.createObjectURL(f); pv.hidden = false;
+}
+// Zdjęcia trafiają do Realtime Database jako tekst (base64). Pełny obraz leży osobno w /images,
+// a w /projects tylko miniatura, dzięki czemu lista projektów ładuje się szybko.
+function shrinkImage(file, { max, q, limit }) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      for (let i = 0; i < 14; i++) {
+        const k = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement("canvas");
+        c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        const url = c.toDataURL("image/jpeg", q);
+        if (url.length <= limit) return res(url);
+        q > .5 ? q -= .1 : max = Math.round(max * .8);
+      }
+      rej(new Error("too-big"));
+    };
+    img.onerror = rej; img.src = URL.createObjectURL(file);
+  });
+}
+// pełne zdjęcie (do ok. 1,5 MB tekstu) i mała miniatura do siatki (do ok. 80 KB)
+const makeFull = f => shrinkImage(f, { max: 1600, q: .85, limit: 1.5 * 1024 * 1024 });
+const makeThumb = f => shrinkImage(f, { max: 520, q: .75, limit: 80 * 1024 });
+$("#projForm").onsubmit = async ev => {
+  ev.preventDefault(); $("#projErr").textContent = "";
+  if (!isAdmin()) return;
+  if (!pickedFile) { $("#projErr").textContent = "Wybierz zdjęcie."; return; }
+  const btn = $("#projSubmit"); btn.disabled = true; btn.textContent = "Wysyłanie…";
+  try {
+    const [full, thumb] = await Promise.all([makeFull(pickedFile), makeThumb(pickedFile)]);
+    const pref = fb.push(fb.ref(fb.db, "projects"));
+    await fb.set(fb.ref(fb.db, `images/${pref.key}`), full);   // najpierw obraz, potem projekt
+    await fb.set(pref, {
+      title: $("#pTitle").value.trim(), category: $("#pCat").value, description: $("#pDesc").value.trim(),
+      link: $("#pLink").value.trim(), tags: $("#pTags").value.split(",").map(s => s.trim()).filter(Boolean),
+      thumbUrl: thumb, createdAt: fb.serverTimestamp()
+    });
+    $("#projForm").reset(); pickedFile = null; $("#pPreview").hidden = true;
+    toast("Projekt opublikowany");
+  } catch (e) { console.error(e); $("#projErr").textContent = e.message === "too-big" ? "Zdjęcie jest za duże nawet po kompresji. Wybierz inne." : "Błąd wysyłania. Sprawdź reguły Firebase i konsolę."; }
+  btn.disabled = false; btn.textContent = "Opublikuj projekt";
+};
+function renderAdminList() {
+  const el = $("#adminList"); if (!el) return;
+  el.innerHTML = projects.map(p => `
+    <div class="admin-row"><img src="${esc(p.thumbUrl || p.imageUrl)}" alt=""><span class="t">${esc(p.title)} <span style="color:var(--muted)">· ${esc(p.category)}</span></span>
+    <button class="btn danger small" data-rm="${esc(p.id)}">Usuń</button></div>`).join("") || `<p class="sub" style="margin-top:16px">Brak projektów.</p>`;
+  el.querySelectorAll("[data-rm]").forEach(b => b.onclick = () => removeProject(b.dataset.rm));
+}
+async function removeProject(id) {
+  const p = projects.find(x => x.id === id);
+  if (!p || !confirm(`Usunąć „${p.title}”?`)) return;
+  try {
+    await Promise.all(["projects", "images", "likes", "comments"].map(n => fb.remove(fb.ref(fb.db, `${n}/${id}`))));
+    toast("Usunięto");
+  } catch (e) { toast("Brak uprawnień"); }
+}
+
+/* ---- Start ---- */
+renderFilters();
+if (DEMO) {
+  demoData(); renderGrid(); updateAuthUI();
+} else {
+  const V = "10.14.1", base = `https://www.gstatic.com/firebasejs/${V}/`;
+  const [app, auth, rtdb] = await Promise.all([
+    import(base + "firebase-app.js"), import(base + "firebase-auth.js"),
+    import(base + "firebase-database.js")
+  ]);
+  const a = app.initializeApp(firebaseConfig);
+  fb = { ...auth, ...rtdb, auth: auth.getAuth(a), db: rtdb.getDatabase(a) };
+
+  fb.onAuthStateChanged(fb.auth, u => {
+    user = u; updateAuthUI();
+    if (openId) openProject(openId);
+    renderGrid();
+  });
+  fb.onValue(fb.ref(fb.db, "projects"), snap => {
+    const v = snap.val() || {};
+    projects = Object.entries(v).map(([id, p]) => ({ id, ...p })).sort((x, y) => (y.createdAt || 0) - (x.createdAt || 0));
+    renderGrid();
+  }, e => { console.error(e); toast("Nie udało się wczytać projektów"); });
+  // wszystkie polubienia naraz: /likes/{projectId}/{uid} = true
+  fb.onValue(fb.ref(fb.db, "likes"), snap => {
+    const m = {};
+    Object.entries(snap.val() || {}).forEach(([pid, users]) => { m[pid] = new Set(Object.keys(users)); });
+    likes = m; renderGrid();
+    if (openId) { const c = $("#likeCount"); if (c) c.textContent = likes[openId]?.size || 0; $("#likeBtn")?.classList.toggle("on", !!(user && likes[openId]?.has(user.uid))); }
+  });
+}
+</script>
+</body>
+</html>
